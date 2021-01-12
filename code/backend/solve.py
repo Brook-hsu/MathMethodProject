@@ -204,8 +204,10 @@ class Meta:
                         self.result['day']/zoom)
         return self.result
 
-a = Meta(1000, 'boy')
 
-a.trans()
-for each_item in a.result.values():
-    print(each_item)
+
+# a = Meta(1000, 'boy')
+
+# a.trans()
+# for each_item in a.result.values():
+#     print(each_item)
