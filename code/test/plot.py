@@ -22,8 +22,8 @@ def cal(day, Xdata, Ydata, step=4, zoom=100):
     return res * zoom
 
 if __name__ == "__main__":
-    datasource = 'boy_height'
-    step = 5
+    datasource = 'girl_height'
+    step = 3
 
     X = {}
     Y = {}
@@ -34,16 +34,18 @@ if __name__ == "__main__":
         Ydata = np.array(list(data.values()))
         Ydata = Ydata[:, SD]
 
-        X[SD] = np.arange(0, 2400)
+        X[SD] = np.arange(0, 2400, 90)
         Y[SD] = []
         for i in X[SD]:
-            Y[SD].append( cal(i, Xdata, Ydata, step=step) )
-
+            Y[SD].append( cal(i, Xdata, Ydata, step=step, zoom=10) )
+        # print(X[SD], cal(14, Xdata, Ydata, step=step, zoom=10) )
         plt.plot(X[SD], Y[SD], label="{}SD".format(SD-3))
+        print( SD, cal(14, Xdata, Ydata) )
+
     plt.title(datasource+'_step={}'.format(step))
     plt.legend()
     plt.xlabel("x")
     plt.ylabel("y")
-    plt.ylim(40, 150)
+    plt.ylim(40, 140)
     plt.grid(True)
     plt.show()

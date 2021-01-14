@@ -1,0 +1,22 @@
+data:
+day: 14
+gender: "boy"
+height:
+SD0: "52.6"
+SD1: "54.5"
+SD2: "56.3"
+SD3: "58.2"
+SDd1: "50.5"
+SDd2: "48.7"
+SDd3: "46.8"
+item: "身高"
+
+weight:
+SD0: "3.9"
+SD1: "4.4"
+SD2: "4.9"
+SD3: "5.5"
+SDd1: "2.8" //error
+SDd2: "3.0"
+SDd3: "2.6"
+item: "体重"

@@ -106,8 +106,8 @@ class Meta:
         0 : [ 2.26, 2.58, 2.93, 3.32, 3.73, 4.18, 4.66 ],
         1 : [ 3.09, 3.52, 3.99, 4.51, 5.07, 5.67, 6.33 ],
         2 : [ 3.94, 4.47, 5.05, 5.68, 6.38, 7.14, 7.97 ],
-        3 : [ 4.69, 5.29, 5.37, 6.70, 7.51, 8.40, 9.37 ],
-        4 : [ 5.25, 5.91, 6.34, 7.45, 8.34, 9.32, 10.39 ],
+        3 : [ 4.69, 5.29, 5.97, 6.70, 7.51, 8.40, 9.37 ],
+        4 : [ 5.25, 5.91, 6.64, 7.45, 8.34, 9.32, 10.39 ],
         5 : [ 5.66, 6.36, 7.14, 8.00, 8.95, 9.99, 11.15 ],
         6 : [ 5.97, 6.70, 7.51, 8.41, 9.41, 10.50, 11.72 ],
         7 : [ 6.24, 6.99, 7.83, 8.76, 9.79, 10.93, 12.20 ],
@@ -187,23 +187,32 @@ class Meta:
     def trans(self, step=4, zoom=100):
         for item in ['weight','height']:
             self.result[item] = {}
-            data = eval('self.std_'+self.result['gender']+'_'+item)
+            self.result[item]['item'] = '体重' if item=='weight' else '身高'
+        
+            # 获取元数据
+            gender = 'boy' if self.result['gender']==u'男孩' else 'girl'
+            data = eval('self.std_'+gender+'_'+item)
+        
+            # 设定数据范围
             mon_input = int(self.result['day'] / 30)
             index_min = max(0, mon_input-step if mon_input<12 else int((mon_input-12)/3)+12-step)
             index_max = min(35, index_min+step*2)
+
             Xmon = np.array( list(data.keys()) )
             Yall = np.array( list(data.values()) )
             X = list(Xmon*30/zoom)
             for var in range(7):
                 # 提取数据列表
                 Y = Yall[:, var]
-                self.result[item]['{:d}SD'.format(var-3)] = \
-                    newton_inter(
+                self.result[item][  \
+                    'SD'+ ('d'if var<3 else '')+'{}'.format(abs(var-3))] = \
+                    '{:.1f}'.format( newton_inter(
                         X[index_min:index_max], 
                         Y[index_min:index_max], 
-                        self.result['day']/zoom)
+                        self.result['day']/zoom))
+            # print(self.result)
         return self.result
-
+    
 
 
 # a = Meta(1000, 'boy')
