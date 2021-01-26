@@ -1,8 +1,26 @@
-* points
+### 框架
 
-zoom 
+* 前端：vue+element
+* 后端：python flask
 
-* THANKS
+### 获取依赖库
 
+* flask
 
-https://www.geogebra.org/calculator
+```
+pip install flask
+```
+
+* numpy
+
+```
+pip install numpy
+```
+
+### 运行
+
+```
+py ./backend/app.py
+```
+
+图省事就双击`run.bat`

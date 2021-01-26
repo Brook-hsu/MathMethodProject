@@ -187,32 +187,24 @@ class Meta:
     def trans(self, step=4, zoom=100):
         for item in ['weight','height']:
             self.result[item] = {}
-            self.result[item]['item'] = '体重' if item=='weight' else '身高'
-        
-            # 获取元数据
-            gender = 'boy' if self.result['gender']==u'男孩' else 'girl'
-            data = eval('self.std_'+gender+'_'+item)
-        
-            # 设定数据范围
+            data = eval('self.std_'+self.result['gender']+'_'+item)
             mon_input = int(self.result['day'] / 30)
             index_min = max(0, mon_input-step if mon_input<12 else int((mon_input-12)/3)+12-step)
             index_max = min(35, index_min+step*2)
-
             Xmon = np.array( list(data.keys()) )
             Yall = np.array( list(data.values()) )
             X = list(Xmon*30/zoom)
             for var in range(7):
                 # 提取数据列表
                 Y = Yall[:, var]
-                self.result[item][  \
-                    'SD'+ ('d'if var<3 else '')+'{}'.format(abs(var-3))] = \
-                    '{:.1f}'.format( newton_inter(
+                self.result[item]['{:d}SD'.format(var-3)] = \
+                    newton_inter(
                         X[index_min:index_max], 
                         Y[index_min:index_max], 
-                        self.result['day']/zoom))
-            # print(self.result)
+                        self.result['day']/zoom)
+        print('data deal success')
         return self.result
-    
+
 
 
 # a = Meta(1000, 'boy')

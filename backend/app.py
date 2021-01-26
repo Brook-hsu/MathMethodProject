@@ -37,6 +37,7 @@ def formdata():
                      + (u'{}天'.format(day%30) if day%30 else '') \
                      + (u'刚出生' if day==0 else '')
    message['querytime'] = datetime.now()
+
    # 计时结束
    if app.debug == True:
       end = datetime.now()
@@ -47,4 +48,4 @@ def formdata():
    return message
 
 if __name__ == '__main__':
-   app.run(debug = True)
+   app.run()
